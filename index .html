@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="imagex/png" href="./formula-1.png">
+    <link rel="stylesheet" href="style.css">
+    <img src="https://cdn-5.motorsport.com/images/amp/6D1QKNO0/s6/max-verstappen-red-bull-racing.jpg" alt="">
+
+    <title>Quiz - Perguntas e respostas</title>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>F1: Quiz</h1>
+        <div id="pergunta"></div>
+        <div id="opcoes"></div>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        const perguntas = [
+        {
+            pergunta: "Qual a data de nascimento de Max?",
+            opcoes: ["30 de Setembro de 1997", "30 de Setembro de 1998", "30 de Outubro de 1997", "30 de Novembro de 1997"],
+            resposta: "30 de Setembro de 1997"
+        },
+        {
+            pergunta: "Qual destas equipes, Max Verstappen iniciou?",
+            opcoes: ["PREMA racing", "MP motorsports", "Carlin", "Scuderia Toro Rosso"],
+            resposta: "Scuderia Toro Rosso"
+        },
+        {
+            pergunta: "Qual foi o Primeiro pódio de Max Verstappen?",
+            opcoes: ["Portimão 2017", "Spielberg 2016", "Barcelona 2016", "Kuala Lumpur 2017"],
+            resposta: "Barcelona 2016"
+        }
+        // Adicionar mais perguntas...
+        ];
+
+        const perguntaElemento = document.getElementById("pergunta");
+        const opcoesElemento = document.getElementById("opcoes");
+        const resultadoElemento = document.getElementById("resultado");
+
+        let indicePerguntaAtual = 0;
+
+        function carregarPergunta() {
+            const perguntaAtual = perguntas[indicePerguntaAtual];
+            perguntaElemento.textContent = perguntaAtual.pergunta;
+
+            opcoesElemento.innerHTML = "";
+            perguntaAtual.opcoes.forEach(opcao => {
+                const botao = document.createElement("button");
+                botao.textContent = opcao;
+                botao.addEventListener("click", () => verificarResposta(opcao));
+                opcoesElemento.appendChild(botao);
+            });
+        }
+
+        function verificarResposta(respostaSelecionada) {
+            const perguntaAtual = perguntas[indicePerguntaAtual];
+            if (respostaSelecionada === perguntaAtual.resposta) {
+                resultadoElemento.textContent = "Resposta correta!";
+                resultadoElemento.className = "correto";
+            } else {
+                resultadoElemento.textContent = "Resposta incorreta. A resposta é: " + perguntaAtual.resposta;
+                resultadoElemento.className = "incorreto";
+            }
+
+            //Avança para a próxima pergunta do quiz
+            indicePerguntaAtual++;
+            if (indicePerguntaAtual < perguntas.length) {
+                setTimeout (carregarPergunta, 2000); // Carrega a próxima perguntas após 2 segundos
+            } else {
+                resultadoElemento.textContent = "Quiz concluído!";
+                resultadoElemento.className = "";
+            }
+        }
+
+        // Carrega a primeira perguntaquando a página carrega
+        carregarPergunta();
+    </script>
+</body>
+</html>
